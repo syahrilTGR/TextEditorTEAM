@@ -12,9 +12,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.FolderOpen
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -46,11 +47,11 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
     private fun logLifecycle(method: String) {
         val tag = "LifecycleLogger:" + method
-        Log.d(tag, "called at ${'$'}sdf.format(Date())")
+        Log.d(tag, "called at ${sdf.format(Date())}")
     }
+
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,10 +65,10 @@ class MainActivity : ComponentActivity() {
                             title = { Text("Text Editor") },
                             actions = {
                                 IconButton(onClick = { openFile() }) {
-                                    Icon(Icons.Default.Add, contentDescription = "Open File")
+                                    Icon(Icons.Default.FolderOpen, contentDescription = "Open File")
                                 }
                                 IconButton(onClick = { saveFile() }) {
-                                    Icon(Icons.Default.MoreVert, contentDescription = "Save File")
+                                    Icon(Icons.Default.Save, contentDescription = "Save File")
                                 }
                                 IconButton(onClick = { finish() }) {
                                     Icon(Icons.Default.Close, contentDescription = "Finish Activity")
