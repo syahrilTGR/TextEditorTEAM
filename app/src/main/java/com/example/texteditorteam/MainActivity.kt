@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FolderOpen
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -57,6 +56,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         logLifecycle("onCreate")
+
+        // Run CleanupService
+        val serviceIntent = Intent(this, CleanupService::class.java)
+        startService(serviceIntent)
+
         setContent {
             TextEditorTEAMTheme {
                 Scaffold(
@@ -102,7 +106,7 @@ class MainActivity : ComponentActivity() {
 
     private fun readTextFromUri(uri: Uri) {
         val stringBuilder = StringBuilder()
-        contentResolver.openInputStream(uri)?.use {
+        contentResolver.openInputStream(uri)?.use { it ->
             BufferedReader(InputStreamReader(it)).use { reader ->
                 var line: String?
                 while (reader.readLine().also { line = it } != null) {
@@ -115,7 +119,7 @@ class MainActivity : ComponentActivity() {
 
     private fun writeTextToUri(uri: Uri, text: String) {
         try {
-            contentResolver.openFileDescriptor(uri, "w")?.use {
+            contentResolver.openFileDescriptor(uri, "w")?.use { it ->
                 FileOutputStream(it.fileDescriptor).use {
                     it.write(text.toByteArray())
                 }
